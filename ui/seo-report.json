@@ -1,0 +1,163 @@
+{
+  "timestamp": "2025-07-21T16:14:58.956Z",
+  "totalPages": 12,
+  "score": 19,
+  "pages": [
+    {
+      "path": "/",
+      "title": {
+        "content": "DevTools Hub - Free Online Developer Tools | JSON, Base64, Regex",
+        "length": 64,
+        "optimal": false
+      },
+      "description": {
+        "content": "Free online developer tools collection. JSON formatter & validator, Base64 encoder/decoder, URL encoding, HTML entities, regex tester, timestamp converter & 20+ tools. No installation required, boost your productivity now!",
+        "length": 222,
+        "optimal": false
+      }
+    },
+    {
+      "path": "/json/formatter",
+      "title": {
+        "content": "JSON Formatter Online - Beautify, Minify & Validate JSON Data",
+        "length": 61,
+        "optimal": false
+      },
+      "description": {
+        "content": "Powerful online JSON formatter with syntax highlighting, error detection & real-time validation. Format, beautify or minify JSON data instantly. Support large files with precise error location. Free tool for developers!",
+        "length": 219,
+        "optimal": false
+      }
+    },
+    {
+      "path": "/json/converter",
+      "title": {
+        "content": "JSON Converter - Convert JSON to YAML, XML, CSV Online Free",
+        "length": 59,
+        "optimal": true
+      },
+      "description": {
+        "content": "Professional JSON converter supporting JSON to YAML, XML, CSV and vice versa. One-click conversion with data integrity preserved. Batch processing, custom configuration supported. Free online tool with secure data handling!",
+        "length": 223,
+        "optimal": false
+      }
+    },
+    {
+      "path": "/json/validator",
+      "title": {
+        "content": "JSON Validator - Online JSON Syntax Checker & Schema Validation",
+        "length": 63,
+        "optimal": false
+      },
+      "description": {
+        "content": "Fast & accurate JSON validator with real-time syntax checking. Precise error location with line numbers & detailed error messages. Support JSON Schema validation to ensure data compliance. Essential debugging tool!",
+        "length": 214,
+        "optimal": false
+      }
+    },
+    {
+      "path": "/encode/base64",
+      "title": {
+        "content": "Base64 Encoder/Decoder - Convert Text, Images & Files Online",
+        "length": 60,
+        "optimal": true
+      },
+      "description": {
+        "content": "Secure Base64 encoding & decoding tool for text, images and files. UTF-8 support with real-time preview. Local processing ensures data privacy. Batch conversion, drag & drop supported. Free online Base64 converter!",
+        "length": 214,
+        "optimal": false
+      }
+    },
+    {
+      "path": "/encode/url",
+      "title": {
+        "content": "URL Encoder/Decoder - Online URL Encoding Tool | encodeURI",
+        "length": 58,
+        "optimal": true
+      },
+      "description": {
+        "content": "Professional URL encoding & decoding tool for complete URLs and query parameters. Smart handling of special characters for safe URL transmission. Support both encodeURI & encodeURIComponent modes. Batch processing available!",
+        "length": 224,
+        "optimal": false
+      }
+    },
+    {
+      "path": "/encode/html",
+      "title": {
+        "content": "HTML Entity Encoder - Escape HTML Characters | XSS Protection",
+        "length": 61,
+        "optimal": false
+      },
+      "description": {
+        "content": "Convenient HTML entity encoding & decoding tool preventing XSS attacks. Ensure safe HTML content display with support for all HTML entities & special characters. Real-time preview included. Essential web security tool!",
+        "length": 218,
+        "optimal": false
+      }
+    },
+    {
+      "path": "/converter/markdown",
+      "title": {
+        "content": "Markdown to HTML Converter - Online MD Editor with GFM Support",
+        "length": 62,
+        "optimal": false
+      },
+      "description": {
+        "content": "Real-time Markdown to HTML converter with full GitHub Flavored Markdown support. Instant preview with code highlighting, tables, task lists & math formulas. Essential tool for writing, documentation & blog creation!",
+        "length": 215,
+        "optimal": false
+      }
+    },
+    {
+      "path": "/converter/csv",
+      "title": {
+        "content": "CSV to JSON Converter - Convert CSV & JSON Data Online Free",
+        "length": 59,
+        "optimal": true
+      },
+      "description": {
+        "content": "Efficient CSV to JSON & JSON to CSV converter with smart delimiter detection. Preserve data structure perfectly. Custom column mapping, batch processing & encoding auto-detection. Essential for Excel import/export & data analysis!",
+        "length": 230,
+        "optimal": false
+      }
+    },
+    {
+      "path": "/regex",
+      "title": {
+        "content": "Regex Tester Online - Regular Expression Testing & Debugging",
+        "length": 60,
+        "optimal": true
+      },
+      "description": {
+        "content": "Powerful regex testing tool with real-time match highlighting. Support all flags: global, multiline, case-insensitive. Common regex patterns library & syntax guide included. Debug regular expressions quickly & efficiently!",
+        "length": 222,
+        "optimal": false
+      }
+    },
+    {
+      "path": "/timestamp",
+      "title": {
+        "content": "Timestamp Converter - Unix Timestamp to Date Online Tool",
+        "length": 56,
+        "optimal": true
+      },
+      "description": {
+        "content": "Accurate timestamp converter supporting seconds & milliseconds Unix timestamps. Bidirectional conversion across all timezones. Real-time current timestamp display, custom date formats & batch conversion. Essential for time handling!",
+        "length": 232,
+        "optimal": false
+      }
+    },
+    {
+      "path": "/sitemap",
+      "title": {
+        "content": "Sitemap - Developer Tools Directory | 20+ Online Dev Tools",
+        "length": 58,
+        "optimal": true
+      },
+      "description": {
+        "content": "Browse complete sitemap of developer tools hub. Quick access to 20+ online development tools including JSON processing, encoding converters, data formatters, regex testers. One-stop solution for daily development needs!",
+        "length": 219,
+        "optimal": false
+      }
+    }
+  ]
+}

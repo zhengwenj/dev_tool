@@ -213,33 +213,38 @@ function main() {
   try {
     console.log('🚀 开始生成站点地图...\n');
     
-    // 确保 public 目录存在
+    // 确保输出目录存在（同时支持 public 和 dist）
+    const distDir = path.join(__dirname, '..', 'dist');
     const publicDir = path.join(__dirname, '..', 'public');
-    if (!fs.existsSync(publicDir)) {
-      fs.mkdirSync(publicDir, { recursive: true });
+    
+    // 如果 dist 目录存在，使用 dist；否则使用 public
+    const outputDir = fs.existsSync(distDir) ? distDir : publicDir;
+    
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
     }
     
     // 生成 XML 站点地图
     const sitemap = generateSitemap(routes);
-    const sitemapPath = path.join(publicDir, 'sitemap.xml');
+    const sitemapPath = path.join(outputDir, 'sitemap.xml');
     fs.writeFileSync(sitemapPath, sitemap, 'utf-8');
     console.log(`✅ XML 站点地图已生成: ${sitemapPath}`);
     
     // 生成 robots.txt
     const robotsTxt = generateRobotsTxt();
-    const robotsPath = path.join(publicDir, 'robots.txt');
+    const robotsPath = path.join(outputDir, 'robots.txt');
     fs.writeFileSync(robotsPath, robotsTxt, 'utf-8');
     console.log(`✅ robots.txt 已生成: ${robotsPath}`);
     
     // 生成站点地图索引
     const sitemapIndex = generateSitemapIndex();
-    const sitemapIndexPath = path.join(publicDir, 'sitemap-index.xml');
+    const sitemapIndexPath = path.join(outputDir, 'sitemap-index.xml');
     fs.writeFileSync(sitemapIndexPath, sitemapIndex, 'utf-8');
     console.log(`✅ 站点地图索引已生成: ${sitemapIndexPath}`);
     
     // 生成 HTML 站点地图
     const htmlSitemap = generateHtmlSitemap(routes);
-    const htmlSitemapPath = path.join(publicDir, 'sitemap.html');
+    const htmlSitemapPath = path.join(outputDir, 'sitemap.html');
     fs.writeFileSync(htmlSitemapPath, htmlSitemap, 'utf-8');
     console.log(`✅ HTML 站点地图已生成: ${htmlSitemapPath}`);
     

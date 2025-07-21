@@ -81,5 +81,17 @@ const router = createRouter({
   routes
 })
 
+// 处理从 404.html 的重定向
+router.beforeEach((to, from, next) => {
+  // 检查是否有重定向参数
+  if (to.query.redirect) {
+    const redirect = decodeURIComponent(to.query.redirect as string)
+    // 移除查询参数并导航到原始路径
+    next(redirect)
+  } else {
+    next()
+  }
+})
+
 export default router
 export { routes }

@@ -8,7 +8,14 @@
     "build:sitemap": "node scripts/generate-sitemap-simple.js",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "sitemap": "node scripts/generate-sitemap-simple.js"
+    "sitemap": "node scripts/generate-sitemap-simple.js",
+    "sitemap:generate": "node scripts/generate-sitemap-simple.js",
+    "sitemap:submit": "node scripts/submit-sitemap.js",
+    "seo:check": "node scripts/check-seo.js",
+    "predeploy": "npm run sitemap:generate && npm run build",
+    "deploy": "gh-pages -d dist",
+    "deploy:full": "npm run predeploy && npm run deploy",
+    "deploy:submit": "npm run deploy:full && npm run sitemap:submit"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
