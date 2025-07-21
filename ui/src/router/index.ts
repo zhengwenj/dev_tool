@@ -67,6 +67,12 @@ const routes: RouteRecordRaw[] = [
     name: 'timestamp',
     component: () => import('@/views/TimestampView.vue'),
     meta: { title: '时间戳转换' }
+  },
+  {
+    path: '/sitemap',
+    name: 'sitemap',
+    component: () => import('@/views/SitemapView.vue'),
+    meta: { title: '网站地图' }
   }
 ]
 
@@ -76,3 +82,4 @@ const router = createRouter({
 })
 
 export default router
+export { routes }
