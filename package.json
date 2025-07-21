@@ -1,0 +1,30 @@
+{
+  "name": "dev-tools",
+  "version": "1.0.0",
+  "description": "开发工具集 - 集成多种开发工具的 Web 应用",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm -C ui dev",
+    "build": "pnpm -C ui build",
+    "preview": "pnpm -C ui preview",
+    "lint": "pnpm -C ui lint"
+  },
+  "keywords": [
+    "dev-tools",
+    "json",
+    "base64",
+    "encode",
+    "decode",
+    "converter",
+    "regex",
+    "timestamp"
+  ],
+  "author": "zhengwj",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.14.0"
+}
