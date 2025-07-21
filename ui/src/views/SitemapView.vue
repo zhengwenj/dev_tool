@@ -146,7 +146,7 @@
             </li>
             <li>
               <a href="/robots.txt" target="_blank" class="text-gray-700 hover:text-blue-600 flex items-center">
-                <el-icon class="mr-1"><Robot /></el-icon>
+                <el-icon class="mr-1"><Setting /></el-icon>
                 Robots.txt
               </a>
             </li>
@@ -210,7 +210,7 @@ import {
   Grid,
   Search,
   Clock,
-  Robot,
+  Setting,
   CopyDocument
 } from '@element-plus/icons-vue'
 

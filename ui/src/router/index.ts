@@ -82,7 +82,7 @@ const router = createRouter({
 })
 
 // 处理从 404.html 的重定向
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   // 检查是否有重定向参数
   if (to.query.redirect) {
     const redirect = decodeURIComponent(to.query.redirect as string)
