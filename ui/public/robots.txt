@@ -1,0 +1,13 @@
+# Robots.txt for https://9852111.xyz
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://9852111.xyz/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow admin or private paths (if any)
+# Disallow: /admin/
+# Disallow: /private/
