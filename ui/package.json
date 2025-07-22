@@ -12,6 +12,8 @@
     "sitemap:generate": "node scripts/generate-sitemap-simple.js",
     "sitemap:submit": "node scripts/submit-sitemap.js",
     "seo:check": "node scripts/check-seo.js",
+    "verify:manage": "node scripts/manage-verification-files.js",
+    "verify:setup": "node scripts/setup-verification.js",
     "predeploy": "npm run sitemap:generate && npm run build",
     "deploy": "gh-pages -d dist",
     "deploy:full": "npm run predeploy && npm run deploy",
