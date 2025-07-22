@@ -266,7 +266,7 @@ const yamlToJson = (yaml: string): any => {
       
       const parent = stack[stack.length - 1]
       if (!Array.isArray(parent)) {
-        throw new Error('Invalid YAML: array item without array context')
+        throw new Error('无效的 YAML：数组项缺少数组上下文')
       }
       
       if (value.includes(':') && !value.startsWith('"') && !value.startsWith("'")) {
@@ -622,7 +622,32 @@ const handleConvert = () => {
     outputData.value = convert(inputFormat.value, outputFormat.value, inputData.value)
     error.value = ''
   } catch (e) {
-    error.value = e instanceof Error ? e.message : '转换失败'
+    if (e instanceof Error) {
+      // 翻译常见的错误消息
+      let errorMsg = e.message
+      
+      if (errorMsg.includes('Unexpected token')) {
+        errorMsg = errorMsg.replace('Unexpected token', '意外的字符')
+      } else if (errorMsg.includes('Unexpected end of JSON input')) {
+        errorMsg = 'JSON 输入意外结束'
+      } else if (errorMsg.includes('Bad control character in string literal')) {
+        // 匹配 "Bad control character in string literal in JSON at position X (line Y column Z)"
+        const match = errorMsg.match(/Bad control character in string literal in JSON at position (\d+) \(line (\d+) column (\d+)\)/)
+        if (match) {
+          errorMsg = `JSON 字符串中存在非法控制字符，位置：${match[1]} (第 ${match[2]} 行 第 ${match[3]} 列)`
+        } else {
+          errorMsg = errorMsg.replace('Bad control character in string literal', 'JSON 字符串中存在非法控制字符')
+        }
+      } else if (errorMsg.includes('JSON.parse')) {
+        errorMsg = errorMsg.replace('JSON.parse:', 'JSON 解析错误：')
+      } else if (errorMsg.includes('is not valid JSON')) {
+        errorMsg = errorMsg.replace('is not valid JSON', '不是有效的 JSON')
+      }
+      
+      error.value = errorMsg
+    } else {
+      error.value = '转换失败'
+    }
     outputData.value = ''
   }
 }

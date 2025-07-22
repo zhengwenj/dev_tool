@@ -98,7 +98,7 @@
                     路径: <code class="bg-gray-100 px-1 rounded">{{ error.path || '/' }}</code>
                   </p>
                   <p v-if="error.schemaPath" class="text-sm text-gray-600">
-                    Schema 路径: <code class="bg-gray-100 px-1 rounded">{{ error.schemaPath }}</code>
+                    模式路径: <code class="bg-gray-100 px-1 rounded">{{ error.schemaPath }}</code>
                   </p>
                 </div>
               </div>
@@ -668,7 +668,32 @@ const handleValidate = () => {
       ElMessage.error(`验证失败，发现 ${validationResult.value.errors.length} 个错误`)
     }
   } catch (e) {
-    ElMessage.error('JSON 格式错误：' + (e instanceof Error ? e.message : '未知错误'))
+    if (e instanceof Error) {
+      // 翻译常见的 JSON 解析错误
+      let errorMsg = e.message
+      
+      if (errorMsg.includes('Unexpected token')) {
+        errorMsg = errorMsg.replace('Unexpected token', '意外的字符')
+      } else if (errorMsg.includes('Unexpected end of JSON input')) {
+        errorMsg = 'JSON 输入意外结束'
+      } else if (errorMsg.includes('Bad control character in string literal')) {
+        // 匹配 "Bad control character in string literal in JSON at position X (line Y column Z)"
+        const match = errorMsg.match(/Bad control character in string literal in JSON at position (\d+) \(line (\d+) column (\d+)\)/)
+        if (match) {
+          errorMsg = `JSON 字符串中存在非法控制字符，位置：${match[1]} (第 ${match[2]} 行 第 ${match[3]} 列)`
+        } else {
+          errorMsg = errorMsg.replace('Bad control character in string literal', 'JSON 字符串中存在非法控制字符')
+        }
+      } else if (errorMsg.includes('JSON.parse')) {
+        errorMsg = errorMsg.replace('JSON.parse:', 'JSON 解析错误：')
+      } else if (errorMsg.includes('is not valid JSON')) {
+        errorMsg = errorMsg.replace('is not valid JSON', '不是有效的 JSON')
+      }
+      
+      ElMessage.error('JSON 格式错误：' + errorMsg)
+    } else {
+      ElMessage.error('JSON 格式错误：未知错误')
+    }
     validationResult.value = null
   }
 }
@@ -755,7 +780,32 @@ const generateSchema = () => {
     jsonSchema.value = JSON.stringify(schema, null, 2)
     ElMessage.success('Schema 生成成功！')
   } catch (e) {
-    ElMessage.error('JSON 格式错误：' + (e instanceof Error ? e.message : '未知错误'))
+    if (e instanceof Error) {
+      // 翻译常见的 JSON 解析错误
+      let errorMsg = e.message
+      
+      if (errorMsg.includes('Unexpected token')) {
+        errorMsg = errorMsg.replace('Unexpected token', '意外的字符')
+      } else if (errorMsg.includes('Unexpected end of JSON input')) {
+        errorMsg = 'JSON 输入意外结束'
+      } else if (errorMsg.includes('Bad control character in string literal')) {
+        // 匹配 "Bad control character in string literal in JSON at position X (line Y column Z)"
+        const match = errorMsg.match(/Bad control character in string literal in JSON at position (\d+) \(line (\d+) column (\d+)\)/)
+        if (match) {
+          errorMsg = `JSON 字符串中存在非法控制字符，位置：${match[1]} (第 ${match[2]} 行 第 ${match[3]} 列)`
+        } else {
+          errorMsg = errorMsg.replace('Bad control character in string literal', 'JSON 字符串中存在非法控制字符')
+        }
+      } else if (errorMsg.includes('JSON.parse')) {
+        errorMsg = errorMsg.replace('JSON.parse:', 'JSON 解析错误：')
+      } else if (errorMsg.includes('is not valid JSON')) {
+        errorMsg = errorMsg.replace('is not valid JSON', '不是有效的 JSON')
+      }
+      
+      ElMessage.error('JSON 格式错误：' + errorMsg)
+    } else {
+      ElMessage.error('JSON 格式错误：未知错误')
+    }
   }
 }
 

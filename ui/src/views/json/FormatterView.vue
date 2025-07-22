@@ -1,4 +1,4 @@
-<template>
+o<template>
   <div class="p-6">
     <div class="max-w-7xl mx-auto">
       <!-- 工具标题和说明 -->
@@ -65,6 +65,14 @@
               <el-button size="small" @click="handleMinify" :disabled="!isValidJson">
                 <el-icon class="mr-1"><Minus /></el-icon>
                 压缩
+              </el-button>
+              <el-button size="small" @click="handleEscape" :disabled="!inputJson.trim()">
+                <el-icon class="mr-1"><Lock /></el-icon>
+                转义
+              </el-button>
+              <el-button size="small" @click="handleUnescape" :disabled="!inputJson.trim()">
+                <el-icon class="mr-1"><Unlock /></el-icon>
+                去转义
               </el-button>
               <el-button size="small" @click="handleCopy" :disabled="!outputJson">
                 <el-icon class="mr-1"><CopyDocument /></el-icon>
@@ -133,6 +141,12 @@
           <div class="flex items-start">
             <el-icon class="text-blue-500 mt-0.5 mr-2"><Check /></el-icon>
             <div>
+              <strong>转义处理</strong> - 转义和去除转义 JSON 字符串
+            </div>
+          </div>
+          <div class="flex items-start">
+            <el-icon class="text-blue-500 mt-0.5 mr-2"><Check /></el-icon>
+            <div>
               <strong>统计分析</strong> - 显示字符数、键值对等信息
             </div>
           </div>
@@ -152,7 +166,9 @@ import {
   Brush,
   Minus,
   CopyDocument,
-  Check
+  Check,
+  Lock,
+  Unlock
 } from '@element-plus/icons-vue'
 
 // 响应式数据
@@ -184,7 +200,33 @@ const validateJson = (text: string) => {
     isValidJson.value = true
     return parsed
   } catch (e) {
-    error.value = e instanceof Error ? e.message : 'JSON 格式错误'
+    if (e instanceof Error) {
+      // 翻译常见的 JSON 解析错误
+      let errorMsg = e.message
+      
+      // 处理各种错误格式
+      if (errorMsg.includes('Unexpected token')) {
+        errorMsg = errorMsg.replace('Unexpected token', '意外的字符')
+      } else if (errorMsg.includes('Unexpected end of JSON input')) {
+        errorMsg = 'JSON 输入意外结束'
+      } else if (errorMsg.includes('Bad control character in string literal')) {
+        // 匹配 "Bad control character in string literal in JSON at position X (line Y column Z)"
+        const match = errorMsg.match(/Bad control character in string literal in JSON at position (\d+) \(line (\d+) column (\d+)\)/)
+        if (match) {
+          errorMsg = `JSON 字符串中存在非法控制字符，位置：${match[1]} (第 ${match[2]} 行 第 ${match[3]} 列)`
+        } else {
+          errorMsg = errorMsg.replace('Bad control character in string literal', 'JSON 字符串中存在非法控制字符')
+        }
+      } else if (errorMsg.includes('JSON.parse')) {
+        errorMsg = errorMsg.replace('JSON.parse:', 'JSON 解析错误：')
+      } else if (errorMsg.includes('is not valid JSON')) {
+        errorMsg = errorMsg.replace('is not valid JSON', '不是有效的 JSON')
+      }
+      
+      error.value = errorMsg
+    } else {
+      error.value = 'JSON 格式错误'
+    }
     isValidJson.value = false
     return null
   }
@@ -249,6 +291,70 @@ const handleMinify = () => {
   if (parsed) {
     outputJson.value = JSON.stringify(parsed)
     ElMessage.success('压缩成功')
+  }
+}
+
+// 转义 JSON 字符串
+const handleEscape = () => {
+  try {
+    const text = inputJson.value.trim()
+    if (!text) return
+    
+    // 如果输入是有效的 JSON，先转换为字符串
+    let stringToEscape = text
+    const parsed = validateJson(text)
+    if (parsed) {
+      stringToEscape = JSON.stringify(parsed)
+    }
+    
+    // 执行转义
+    const escaped = JSON.stringify(stringToEscape)
+    // 去掉外层的引号，显示在输出框
+    outputJson.value = escaped.slice(1, -1)
+    
+    // 清空错误
+    error.value = ''
+    isValidJson.value = false
+    stats.value = null
+    
+    ElMessage.success('转义成功')
+  } catch (e) {
+    ElMessage.error('转义失败：' + (e instanceof Error ? e.message : '未知错误'))
+  }
+}
+
+// 去除转义
+const handleUnescape = () => {
+  try {
+    const text = inputJson.value.trim()
+    if (!text) return
+    
+    // 添加外层引号以构成有效的 JSON 字符串
+    const jsonString = `"${text}"`
+    
+    // 解析 JSON 字符串以去除转义
+    const unescaped = JSON.parse(jsonString)
+    
+    // 显示在输出框
+    outputJson.value = unescaped
+    
+    // 尝试解析结果是否为有效的 JSON
+    try {
+      const parsed = JSON.parse(unescaped)
+      // 如果是有效的 JSON，更新统计信息
+      stats.value = calculateStats(parsed)
+      isValidJson.value = true
+      error.value = ''
+    } catch {
+      // 如果不是有效的 JSON，清空统计
+      error.value = ''
+      isValidJson.value = false
+      stats.value = null
+    }
+    
+    ElMessage.success('去转义成功')
+  } catch (e) {
+    ElMessage.error('去转义失败：' + (e instanceof Error ? e.message : '未知错误'))
   }
 }
 

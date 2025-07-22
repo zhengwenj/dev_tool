@@ -69,6 +69,12 @@ const routes: RouteRecordRaw[] = [
     meta: { title: '时间戳转换' }
   },
   {
+    path: '/text-processor',
+    name: 'text-processor',
+    component: () => import('@/views/TextProcessorView.vue'),
+    meta: { title: '统一文本处理器' }
+  },
+  {
     path: '/sitemap',
     name: 'sitemap',
     component: () => import('@/views/SitemapView.vue'),

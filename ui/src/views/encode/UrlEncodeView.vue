@@ -6,7 +6,7 @@
         <h1 class="text-2xl font-bold text-gray-800 mb-2">URL 编码/解码</h1>
         <p class="text-gray-600">在线 URL 编码和解码工具，支持完整 URL 和组件编码</p>
       </div>
-      
+
       <!-- 编码模式选择 -->
       <div class="mb-6">
         <el-radio-group v-model="encodeMode" size="large">
@@ -15,27 +15,35 @@
           <el-radio-button value="params">查询参数编码</el-radio-button>
         </el-radio-group>
       </div>
-      
+
       <!-- 操作按钮 -->
       <div class="flex justify-center space-x-4 mb-6">
         <el-button type="primary" size="large" @click="encode">
-          <el-icon class="mr-2"><Lock /></el-icon>
+          <el-icon class="mr-2">
+            <Lock/>
+          </el-icon>
           编码
         </el-button>
         <el-button type="success" size="large" @click="decode">
-          <el-icon class="mr-2"><Unlock /></el-icon>
+          <el-icon class="mr-2">
+            <Unlock/>
+          </el-icon>
           解码
         </el-button>
         <el-button size="large" @click="swap">
-          <el-icon class="mr-2"><Switch /></el-icon>
+          <el-icon class="mr-2">
+            <Switch/>
+          </el-icon>
           交换
         </el-button>
         <el-button size="large" @click="clear">
-          <el-icon class="mr-2"><Delete /></el-icon>
+          <el-icon class="mr-2">
+            <Delete/>
+          </el-icon>
           清空
         </el-button>
       </div>
-      
+
       <!-- 输入输出区域 -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- 输入区域 -->
@@ -44,16 +52,20 @@
             <h3 class="text-lg font-medium">输入</h3>
             <div class="space-x-2">
               <el-button size="small" @click="pasteInput">
-                <el-icon class="mr-1"><DocumentCopy /></el-icon>
+                <el-icon class="mr-1">
+                  <DocumentCopy/>
+                </el-icon>
                 粘贴
               </el-button>
               <el-button size="small" @click="loadExample">
-                <el-icon class="mr-1"><Document /></el-icon>
+                <el-icon class="mr-1">
+                  <Document/>
+                </el-icon>
                 示例
               </el-button>
             </div>
           </div>
-          
+
           <el-input
             v-model="input"
             type="textarea"
@@ -61,15 +73,15 @@
             placeholder="在此输入要编码/解码的内容..."
             class="font-mono"
           />
-          
+
           <!-- 编码选项 -->
           <div class="space-y-2">
             <div class="flex items-center space-x-4">
               <span class="text-sm text-gray-600">字符集:</span>
               <el-select v-model="charset" size="small" style="width: 120px">
-                <el-option label="UTF-8" value="utf-8" />
-                <el-option label="GBK" value="gbk" />
-                <el-option label="GB2312" value="gb2312" />
+                <el-option label="UTF-8" value="utf-8"/>
+                <el-option label="GBK" value="gbk"/>
+                <el-option label="GB2312" value="gb2312"/>
               </el-select>
             </div>
             <el-checkbox v-model="preserveSpecialChars" size="small">
@@ -77,17 +89,19 @@
             </el-checkbox>
           </div>
         </div>
-        
+
         <!-- 输出区域 -->
         <div class="space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-medium">输出</h3>
             <el-button size="small" @click="copyOutput" :disabled="!output">
-              <el-icon class="mr-1"><CopyDocument /></el-icon>
+              <el-icon class="mr-1">
+                <CopyDocument/>
+              </el-icon>
               复制
             </el-button>
           </div>
-          
+
           <el-input
             v-model="output"
             type="textarea"
@@ -96,7 +110,7 @@
             readonly
             class="font-mono"
           />
-          
+
           <!-- 输出统计 -->
           <div v-if="stats" class="text-sm text-gray-600 space-y-1">
             <p>输入长度: {{ stats.inputLength }} 字符</p>
@@ -105,7 +119,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- URL 解析器 -->
       <div v-if="encodeMode === 'full' && parsedUrl" class="mt-6 bg-blue-50 rounded-lg p-6">
         <h3 class="text-lg font-semibold mb-4">URL 解析结果</h3>
@@ -113,32 +127,32 @@
           <div class="grid grid-cols-3 gap-2 text-sm">
             <span class="text-gray-600">协议:</span>
             <span class="col-span-2 font-mono">{{ parsedUrl.protocol || '-' }}</span>
-            
+
             <span class="text-gray-600">主机:</span>
             <span class="col-span-2 font-mono">{{ parsedUrl.host || '-' }}</span>
-            
+
             <span class="text-gray-600">端口:</span>
             <span class="col-span-2 font-mono">{{ parsedUrl.port || '默认' }}</span>
-            
+
             <span class="text-gray-600">路径:</span>
             <span class="col-span-2 font-mono">{{ parsedUrl.pathname || '/' }}</span>
-            
+
             <span class="text-gray-600">查询参数:</span>
             <span class="col-span-2 font-mono">{{ parsedUrl.search || '-' }}</span>
-            
+
             <span class="text-gray-600">锚点:</span>
             <span class="col-span-2 font-mono">{{ parsedUrl.hash || '-' }}</span>
           </div>
         </div>
       </div>
-      
+
       <!-- 查询参数编辑器 -->
       <div v-if="encodeMode === 'params'" class="mt-6 bg-green-50 rounded-lg p-6">
         <h3 class="text-lg font-semibold mb-4">查询参数编辑器</h3>
-        
+
         <!-- 参数列表 -->
         <div class="space-y-2 mb-4">
-          <div v-for="(param, index) in queryParams" :key="index" 
+          <div v-for="(param, index) in queryParams" :key="index"
                class="flex items-center space-x-2">
             <el-input
               v-model="param.key"
@@ -162,13 +176,15 @@
             />
           </div>
         </div>
-        
+
         <!-- 添加参数按钮 -->
         <el-button size="small" @click="addParam">
-          <el-icon class="mr-1"><Plus /></el-icon>
+          <el-icon class="mr-1">
+            <Plus/>
+          </el-icon>
           添加参数
         </el-button>
-        
+
         <!-- 生成查询字符串 -->
         <div class="mt-4">
           <el-button type="primary" size="small" @click="buildQueryString">
@@ -179,12 +195,12 @@
           </el-button>
         </div>
       </div>
-      
+
       <!-- 常用字符编码参考 -->
       <div class="mt-8 bg-gray-50 rounded-lg p-6">
         <h3 class="text-lg font-semibold mb-4">常用字符编码参考</h3>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-          <div v-for="char in commonChars" :key="char.char" 
+          <div v-for="char in commonChars" :key="char.char"
                class="bg-white rounded p-3 border">
             <div class="flex justify-between items-center">
               <span class="font-mono text-lg">{{ char.char }}</span>
@@ -194,7 +210,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- 功能说明 -->
       <div class="mt-6 bg-gray-50 rounded-lg p-6">
         <h3 class="text-lg font-semibold mb-3">URL 编码说明</h3>
@@ -227,7 +243,7 @@
             </ul>
           </div>
         </div>
-        
+
         <div class="mt-4 p-3 bg-yellow-50 rounded text-sm">
           <p class="text-yellow-800">
             <strong>提示:</strong> URL 编码会将非 ASCII 字符和特殊字符转换为 %XX 格式，
@@ -240,8 +256,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import { ElMessage } from 'element-plus'
+import {ref, watch} from 'vue'
+import {ElMessage} from 'element-plus'
 import {
   Lock,
   Unlock,
@@ -271,6 +287,7 @@ interface Stats {
   outputLength: number
   changeRate: string
 }
+
 const stats = ref<Stats | null>(null)
 
 // URL 解析结果
@@ -282,6 +299,7 @@ interface ParsedUrl {
   search: string
   hash: string
 }
+
 const parsedUrl = ref<ParsedUrl | null>(null)
 
 // 查询参数
@@ -289,24 +307,25 @@ interface QueryParam {
   key: string
   value: string
 }
+
 const queryParams = ref<QueryParam[]>([
-  { key: '', value: '' }
+  {key: '', value: ''}
 ])
 
 // 常用字符编码参考
 const commonChars = [
-  { char: ' ', encoded: '%20', name: '空格' },
-  { char: '!', encoded: '%21', name: '感叹号' },
-  { char: '#', encoded: '%23', name: '井号' },
-  { char: '$', encoded: '%24', name: '美元符' },
-  { char: '&', encoded: '%26', name: '和号' },
-  { char: '+', encoded: '%2B', name: '加号' },
-  { char: '=', encoded: '%3D', name: '等号' },
-  { char: '?', encoded: '%3F', name: '问号' },
-  { char: '@', encoded: '%40', name: 'At符号' },
-  { char: '/', encoded: '%2F', name: '斜杠' },
-  { char: ':', encoded: '%3A', name: '冒号' },
-  { char: '中', encoded: '%E4%B8%AD', name: '中文示例' }
+  {char: ' ', encoded: '%20', name: '空格'},
+  {char: '!', encoded: '%21', name: '感叹号'},
+  {char: '#', encoded: '%23', name: '井号'},
+  {char: '$', encoded: '%24', name: '美元符'},
+  {char: '&', encoded: '%26', name: '和号'},
+  {char: '+', encoded: '%2B', name: '加号'},
+  {char: '=', encoded: '%3D', name: '等号'},
+  {char: '?', encoded: '%3F', name: '问号'},
+  {char: '@', encoded: '%40', name: 'At符号'},
+  {char: '/', encoded: '%2F', name: '斜杠'},
+  {char: ':', encoded: '%3A', name: '冒号'},
+  {char: '中', encoded: '%E4%B8%AD', name: '中文示例'}
 ]
 
 // 编码
@@ -316,9 +335,9 @@ const encode = () => {
       ElMessage.warning('请输入要编码的内容')
       return
     }
-    
+
     let encoded = ''
-    
+
     switch (encodeMode.value) {
       case 'component':
         // URL 组件编码
@@ -331,7 +350,7 @@ const encode = () => {
           encoded = encodeURIComponent(input.value)
         }
         break
-        
+
       case 'full':
         // 完整 URL 编码
         encoded = encodeURI(input.value)
@@ -350,7 +369,7 @@ const encode = () => {
           parsedUrl.value = null
         }
         break
-        
+
       case 'params':
         // 查询参数编码
         const params = new URLSearchParams()
@@ -362,7 +381,7 @@ const encode = () => {
         encoded = params.toString()
         break
     }
-    
+
     output.value = encoded
     updateStats()
     ElMessage.success('编码成功')
@@ -378,15 +397,15 @@ const decode = () => {
       ElMessage.warning('请输入要解码的内容')
       return
     }
-    
+
     let decoded = ''
-    
+
     switch (encodeMode.value) {
       case 'component':
         // URL 组件解码
         decoded = decodeURIComponent(input.value)
         break
-        
+
       case 'full':
         // 完整 URL 解码
         decoded = decodeURI(input.value)
@@ -405,7 +424,7 @@ const decode = () => {
           parsedUrl.value = null
         }
         break
-        
+
       case 'params':
         // 查询参数解码
         const params = new URLSearchParams(input.value)
@@ -414,18 +433,18 @@ const decode = () => {
           decodedParams.push(`${key}=${value}`)
         })
         decoded = decodedParams.join('\n')
-        
+
         // 更新参数列表
         queryParams.value = []
         params.forEach((value, key) => {
-          queryParams.value.push({ key, value })
+          queryParams.value.push({key, value})
         })
         if (queryParams.value.length === 0) {
-          queryParams.value.push({ key: '', value: '' })
+          queryParams.value.push({key: '', value: ''})
         }
         break
     }
-    
+
     output.value = decoded
     updateStats()
     ElMessage.success('解码成功')
@@ -448,7 +467,7 @@ const clear = () => {
   output.value = ''
   stats.value = null
   parsedUrl.value = null
-  queryParams.value = [{ key: '', value: '' }]
+  queryParams.value = [{key: '', value: ''}]
 }
 
 // 粘贴输入
@@ -473,10 +492,10 @@ const loadExample = () => {
     case 'params':
       input.value = 'name=张三&age=20&city=北京&email=test@example.com'
       queryParams.value = [
-        { key: 'name', value: '张三' },
-        { key: 'age', value: '20' },
-        { key: 'city', value: '北京' },
-        { key: 'email', value: 'test@example.com' }
+        {key: 'name', value: '张三'},
+        {key: 'age', value: '20'},
+        {key: 'city', value: '北京'},
+        {key: 'email', value: 'test@example.com'}
       ]
       break
   }
@@ -498,7 +517,7 @@ const updateStats = () => {
   const outputLen = output.value.length
   const change = outputLen - inputLen
   const changeRate = inputLen > 0 ? ((change / inputLen) * 100).toFixed(1) : '0'
-  
+
   stats.value = {
     inputLength: inputLen,
     outputLength: outputLen,
@@ -508,14 +527,14 @@ const updateStats = () => {
 
 // 添加查询参数
 const addParam = () => {
-  queryParams.value.push({ key: '', value: '' })
+  queryParams.value.push({key: '', value: ''})
 }
 
 // 删除查询参数
 const removeParam = (index: number) => {
   queryParams.value.splice(index, 1)
   if (queryParams.value.length === 0) {
-    queryParams.value.push({ key: '', value: '' })
+    queryParams.value.push({key: '', value: ''})
   }
 }
 
@@ -537,15 +556,15 @@ const parseQueryString = () => {
     ElMessage.warning('请输入查询字符串')
     return
   }
-  
+
   try {
     const params = new URLSearchParams(input.value)
     queryParams.value = []
     params.forEach((value, key) => {
-      queryParams.value.push({ key, value })
+      queryParams.value.push({key, value})
     })
     if (queryParams.value.length === 0) {
-      queryParams.value.push({ key: '', value: '' })
+      queryParams.value.push({key: '', value: ''})
     }
     ElMessage.success('解析成功')
   } catch (e) {
@@ -557,7 +576,7 @@ const parseQueryString = () => {
 watch(encodeMode, () => {
   parsedUrl.value = null
   if (encodeMode.value === 'params' && queryParams.value.length === 0) {
-    queryParams.value.push({ key: '', value: '' })
+    queryParams.value.push({key: '', value: ''})
   }
 })
 </script>

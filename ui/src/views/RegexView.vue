@@ -327,8 +327,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ref, watch } from 'vue'
 import {
   Document,
   Delete,
@@ -548,7 +547,7 @@ const doReplace = () => {
     const regex = new RegExp(pattern.value, flags.value)
     let count = 0
     
-    const result = testText.value.replace(regex, (match, ...args) => {
+    const result = testText.value.replace(regex, (_match, ..._args) => {
       count++
       return replacePattern.value
     })

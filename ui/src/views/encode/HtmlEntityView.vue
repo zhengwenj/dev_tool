@@ -495,12 +495,12 @@ const decode = () => {
     })
     
     // 解码数字实体
-    result = result.replace(/&#(\d+);/g, (match, code) => {
+    result = result.replace(/&#(\d+);/g, (_match, code) => {
       return String.fromCharCode(parseInt(code, 10))
     })
     
     // 解码十六进制实体
-    result = result.replace(/&#x([0-9a-fA-F]+);/g, (match, code) => {
+    result = result.replace(/&#x([0-9a-fA-F]+);/g, (_match, code) => {
       return String.fromCharCode(parseInt(code, 16))
     })
     

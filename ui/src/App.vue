@@ -52,6 +52,11 @@
             <el-icon><Clock /></el-icon>
             <span>时间戳转换</span>
           </el-menu-item>
+          
+          <el-menu-item index="/text-processor">
+            <el-icon><EditPen /></el-icon>
+            <span>统一文本处理</span>
+          </el-menu-item>
         </el-menu>
       </div>
     </el-aside>
@@ -107,7 +112,8 @@ import {
   Search,
   Clock,
   QuestionFilled,
-  Setting
+  Setting,
+  EditPen
 } from '@element-plus/icons-vue'
 
 const route = useRoute()

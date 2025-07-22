@@ -289,7 +289,7 @@ class MarkdownParser {
     }
     
     // 代码块（必须在其他规则之前处理）
-    html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (match, lang, code) => {
+    html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_match, lang, code) => {
       const escaped = this.escapeHtml(code.trim())
       return `<pre><code class="language-${lang}">${escaped}</code></pre>`
     })
@@ -395,9 +395,9 @@ class MarkdownParser {
   private parseTable(html: string): string {
     const tableRegex = /\|(.+)\|\n\|[\s\-:|]+\|\n((?:\|.+\|\n?)+)/g
     
-    return html.replace(tableRegex, (match, header, body) => {
+    return html.replace(tableRegex, (_match, header, body) => {
       const headers = header.split('|').filter((h: string) => h.trim())
-      const rows = body.trim().split('\n').map((row: string) => 
+      const rows = body.trim().split('\n').map((row: string) =>
         row.split('|').filter((cell: string) => cell.trim())
       )
       

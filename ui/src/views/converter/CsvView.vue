@@ -385,7 +385,7 @@ const parseCSV = (csv: string): any[] => {
     const row: any = {}
     
     headers.forEach((header, index) => {
-      let value = values[index] || ''
+      let value: any = values[index] || ''
       
       // 类型推断
       if (jsonOptions.value.parseNumbers && /^-?\d+(\.\d+)?$/.test(value)) {
@@ -454,7 +454,7 @@ const jsonToCSV = (data: any): string => {
   
   // 获取所有字段
   const headers = new Set<string>()
-  data.forEach(item => {
+  data.forEach((item: any) => {
     if (typeof item === 'object' && item !== null) {
       Object.keys(item).forEach(key => headers.add(key))
     }
@@ -474,7 +474,7 @@ const jsonToCSV = (data: any): string => {
   }
   
   // 添加数据行
-  data.forEach(item => {
+  data.forEach((item: any) => {
     const values = headerArray.map(header => {
       const value = item[header]
       return formatCSVValue(value, delimiter, quote)
