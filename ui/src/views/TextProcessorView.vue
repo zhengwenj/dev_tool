@@ -403,8 +403,8 @@ const formatXml = () => {
       .split('\n')
       .map((line, index) => {
         const indent = line.match(/^(\s*)<\//) ? -1 : 0
-        const depth = (line.match(/<[^/][^>]*[^/]>/g) || []).length -
-          (line.match(/<\/[^>]+>/g) || []).length
+        // const depth = (line.match(/<[^/][^>]*[^/]>/g) || []).length -
+        //   (line.match(/<\/[^>]+>/g) || []).length
         return '  '.repeat(Math.max(0, index + indent)) + line.trim()
       })
       .join('\n')
