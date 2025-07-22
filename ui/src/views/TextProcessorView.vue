@@ -6,7 +6,7 @@
         <h1 class="text-2xl font-bold text-gray-800 mb-2">统一文本处理器</h1>
         <p class="text-gray-600">在同一个文本框中进行多种文本处理操作，所有转换都在原地完成</p>
       </div>
-      
+
       <!-- 主要内容区 -->
       <div class="space-y-4">
         <!-- 操作按钮组 -->
@@ -17,24 +17,32 @@
               <div class="text-sm font-medium text-gray-700 mb-2">JSON 操作</div>
               <div class="grid grid-cols-1 gap-2">
                 <el-button size="small" @click="formatJson" class="w-full">
-                  <el-icon class="mr-1"><Brush /></el-icon>
+                  <el-icon class="mr-1">
+                    <Brush/>
+                  </el-icon>
                   格式化
                 </el-button>
                 <el-button size="small" @click="minifyJson" class="w-full">
-                  <el-icon class="mr-1"><Minus /></el-icon>
+                  <el-icon class="mr-1">
+                    <Minus/>
+                  </el-icon>
                   压缩
                 </el-button>
                 <el-button size="small" @click="escapeJson" class="w-full">
-                  <el-icon class="mr-1"><Lock /></el-icon>
+                  <el-icon class="mr-1">
+                    <Lock/>
+                  </el-icon>
                   转义
                 </el-button>
                 <el-button size="small" @click="unescapeJson" class="w-full">
-                  <el-icon class="mr-1"><Unlock /></el-icon>
+                  <el-icon class="mr-1">
+                    <Unlock/>
+                  </el-icon>
                   去转义
                 </el-button>
               </div>
             </div>
-            
+
             <!-- 编码操作 -->
             <div class="flex flex-col h-full">
               <div class="text-sm font-medium text-gray-700 mb-2">编码操作</div>
@@ -53,22 +61,26 @@
                 </el-button>
               </div>
             </div>
-            
+
             <!-- XML 操作 -->
             <div class="flex flex-col h-full">
               <div class="text-sm font-medium text-gray-700 mb-2">XML 操作</div>
               <div class="grid grid-cols-1 gap-2">
                 <el-button size="small" @click="formatXml" class="w-full">
-                  <el-icon class="mr-1"><Brush /></el-icon>
+                  <el-icon class="mr-1">
+                    <Brush/>
+                  </el-icon>
                   格式化
                 </el-button>
                 <el-button size="small" @click="minifyXml" class="w-full">
-                  <el-icon class="mr-1"><Minus /></el-icon>
+                  <el-icon class="mr-1">
+                    <Minus/>
+                  </el-icon>
                   压缩
                 </el-button>
               </div>
             </div>
-            
+
             <!-- HTML 操作 -->
             <div class="flex flex-col h-full">
               <div class="text-sm font-medium text-gray-700 mb-2">HTML 操作</div>
@@ -81,7 +93,7 @@
                 </el-button>
               </div>
             </div>
-            
+
             <!-- 格式转换 -->
             <div class="flex flex-col h-full">
               <div class="text-sm font-medium text-gray-700 mb-2">格式转换</div>
@@ -100,7 +112,7 @@
                 </el-button>
               </div>
             </div>
-            
+
             <!-- 其他操作 -->
             <div class="flex flex-col h-full">
               <div class="text-sm font-medium text-gray-700 mb-2">其他操作</div>
@@ -121,38 +133,48 @@
             </div>
           </div>
         </div>
-        
+
         <!-- 快捷操作栏 -->
         <div class="flex items-center justify-between">
           <div class="space-x-2">
             <el-button size="small" @click="handlePaste">
-              <el-icon class="mr-1"><DocumentCopy /></el-icon>
+              <el-icon class="mr-1">
+                <DocumentCopy/>
+              </el-icon>
               粘贴
             </el-button>
             <el-button size="small" @click="handleCopy">
-              <el-icon class="mr-1"><CopyDocument /></el-icon>
+              <el-icon class="mr-1">
+                <CopyDocument/>
+              </el-icon>
               复制
             </el-button>
             <el-button size="small" @click="handleClear">
-              <el-icon class="mr-1"><Delete /></el-icon>
+              <el-icon class="mr-1">
+                <Delete/>
+              </el-icon>
               清空
             </el-button>
             <el-button size="small" @click="handleUndo" :disabled="historyIndex <= 0">
-              <el-icon class="mr-1"><Back /></el-icon>
+              <el-icon class="mr-1">
+                <Back/>
+              </el-icon>
               撤销
             </el-button>
             <el-button size="small" @click="handleRedo" :disabled="historyIndex >= history.length - 1">
-              <el-icon class="mr-1"><Right /></el-icon>
+              <el-icon class="mr-1">
+                <Right/>
+              </el-icon>
               重做
             </el-button>
           </div>
-          
+
           <!-- 状态信息 -->
           <div class="text-sm text-gray-600">
             <span v-if="lastOperation">最后操作: {{ lastOperation }}</span>
           </div>
         </div>
-        
+
         <!-- 文本编辑区 -->
         <div class="relative">
           <el-input
@@ -163,16 +185,18 @@
             class="font-mono"
             @input="handleInput"
           />
-          
+
           <!-- 错误提示 -->
           <div v-if="error" class="absolute bottom-0 left-0 right-0 bg-red-50 border-t border-red-200 p-2">
             <p class="text-sm text-red-600 flex items-center">
-              <el-icon class="mr-1"><WarningFilled /></el-icon>
+              <el-icon class="mr-1">
+                <WarningFilled/>
+              </el-icon>
               {{ error }}
             </p>
           </div>
         </div>
-        
+
         <!-- 统计信息 -->
         <div class="bg-gray-50 rounded p-3 text-sm">
           <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -195,7 +219,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- 使用说明 -->
       <div class="mt-8 bg-blue-50 rounded-lg p-6">
         <h3 class="text-lg font-semibold mb-3">使用说明</h3>
@@ -227,19 +251,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import { ElMessage } from 'element-plus'
+import {computed, ref} from 'vue'
+import {ElMessage} from 'element-plus'
 import {
-  DocumentCopy,
-  Delete,
-  WarningFilled,
-  CopyDocument,
-  Brush,
-  Minus,
-  Lock,
-  Unlock,
   Back,
-  Right
+  Brush,
+  CopyDocument,
+  Delete,
+  DocumentCopy,
+  Lock,
+  Minus,
+  Right,
+  Unlock,
+  WarningFilled
 } from '@element-plus/icons-vue'
 
 // 文本内容
@@ -256,7 +280,7 @@ const maxHistorySize = 50
 const stats = computed(() => {
   const text = content.value
   const bytes = new Blob([text]).size
-  
+
   return {
     characters: text.length,
     words: text.trim() ? text.trim().split(/\s+/).length : 0,
@@ -271,15 +295,15 @@ const addToHistory = (text: string) => {
   if (historyIndex.value < history.value.length - 1) {
     history.value = history.value.slice(0, historyIndex.value + 1)
   }
-  
+
   // 添加新记录
   history.value.push(text)
-  
+
   // 限制历史记录大小
   if (history.value.length > maxHistorySize) {
     history.value = history.value.slice(-maxHistorySize)
   }
-  
+
   historyIndex.value = history.value.length - 1
 }
 
@@ -289,7 +313,7 @@ const executeOperation = (operation: () => void, operationName: string) => {
     error.value = ''
     const beforeContent = content.value
     operation()
-    
+
     // 如果内容有变化，添加到历史记录
     if (content.value !== beforeContent) {
       addToHistory(content.value)
@@ -362,29 +386,29 @@ const formatXml = () => {
   executeOperation(() => {
     const parser = new DOMParser()
     const xmlDoc = parser.parseFromString(content.value, 'text/xml')
-    
+
     // 检查解析错误
     const parseError = xmlDoc.querySelector('parsererror')
     if (parseError) {
       throw new Error('无效的 XML 格式')
     }
-    
+
     // 格式化 XML
     const serializer = new XMLSerializer()
     const xmlString = serializer.serializeToString(xmlDoc)
-    
+
     // 简单的格式化
     let formatted = xmlString
       .replace(/></g, '>\n<')
       .split('\n')
       .map((line, index) => {
         const indent = line.match(/^(\s*)<\//) ? -1 : 0
-        const depth = (line.match(/<[^/][^>]*[^/]>/g) || []).length - 
-                     (line.match(/<\/[^>]+>/g) || []).length
+        const depth = (line.match(/<[^/][^>]*[^/]>/g) || []).length -
+          (line.match(/<\/[^>]+>/g) || []).length
         return '  '.repeat(Math.max(0, index + indent)) + line.trim()
       })
       .join('\n')
-    
+
     content.value = formatted
   }, 'XML 格式化')
 }
@@ -480,16 +504,16 @@ const countWords = () => {
 // 辅助函数
 const convertJsonToYaml = (obj: any, level = 0): string => {
   const indent = '  '.repeat(level)
-  
+
   if (obj === null) return 'null'
   if (typeof obj !== 'object') return String(obj)
-  
+
   if (Array.isArray(obj)) {
-    return obj.map(item => 
+    return obj.map(item =>
       `${indent}- ${typeof item === 'object' ? '\n' + convertJsonToYaml(item, level + 1) : item}`
     ).join('\n')
   }
-  
+
   return Object.entries(obj).map(([key, value]) => {
     if (typeof value === 'object' && value !== null) {
       return `${indent}${key}:\n${convertJsonToYaml(value, level + 1)}`
@@ -503,7 +527,7 @@ const parseSimpleYaml = (yaml: string): any => {
   // 实际项目中应使用 js-yaml 等专门的库
   const lines = yaml.split('\n').filter(line => line.trim() && !line.trim().startsWith('#'))
   const result: any = {}
-  
+
   // 简单处理，仅支持基本的键值对
   lines.forEach(line => {
     const match = line.match(/^(\s*)([^:]+):\s*(.*)$/)
@@ -512,38 +536,38 @@ const parseSimpleYaml = (yaml: string): any => {
       result[key.trim()] = value.trim() || null
     }
   })
-  
+
   return result
 }
 
 const convertJsonToXml = (obj: any, rootName: string): string => {
   const convert = (data: any, name: string, level = 0): string => {
     const indent = '  '.repeat(level)
-    
+
     if (data === null || data === undefined) {
       return `${indent}<${name}/>\n`
     }
-    
+
     if (Array.isArray(data)) {
       return data.map(item => convert(item, name, level)).join('')
     }
-    
+
     if (typeof data === 'object') {
       const children = Object.entries(data)
         .map(([k, v]) => convert(v, k, level + 1))
         .join('')
       return `${indent}<${name}>\n${children}${indent}</${name}>\n`
     }
-    
+
     return `${indent}<${name}>${data}</${name}>\n`
   }
-  
+
   return `<?xml version="1.0" encoding="UTF-8"?>\n${convert(obj, rootName)}`
 }
 
 const convertXmlToJson = (node: Element): any => {
   const children = Array.from(node.children)
-  
+
   if (children.length === 0) {
     const text = node.textContent || ''
     if (text === 'true') return true
@@ -552,12 +576,12 @@ const convertXmlToJson = (node: Element): any => {
     if (!isNaN(num) && text === String(num)) return num
     return text
   }
-  
+
   const result: any = {}
   children.forEach(child => {
     const tagName = child.tagName
     const value = convertXmlToJson(child)
-    
+
     if (result[tagName] !== undefined) {
       if (!Array.isArray(result[tagName])) {
         result[tagName] = [result[tagName]]
@@ -567,7 +591,7 @@ const convertXmlToJson = (node: Element): any => {
       result[tagName] = value
     }
   })
-  
+
   return result
 }
 
