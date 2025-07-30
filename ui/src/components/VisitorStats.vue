@@ -54,19 +54,6 @@ const fetchUmamiStats = async () => {
   }
 }
 
-// 真实的umami API调用示例（需要后端支持）
-const fetchRealUmamiStats = async () => {
-  try {
-    // 这需要后端API来代理umami的统计接口
-    // const response = await fetch('/api/umami-stats')
-    // const data = await response.json()
-    // todayVisits.value = data.todayVisits
-    // totalVisits.value = data.totalVisits
-    // onlineUsers.value = data.onlineUsers
-  } catch (error) {
-    console.error('获取umami统计失败:', error)
-  }
-}
 
 // 组件挂载时获取统计数据
 onMounted(() => {
