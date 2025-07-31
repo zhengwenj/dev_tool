@@ -1,0 +1,36 @@
+name: 9852111前端
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  build:
+    name: 博客构建、部署
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: 设置 pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: 安装依赖、构建
+        working-directory: ui
+        run: |
+          pnpm install
+          pnpm run build
+
+      - name: 部署到服务器
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: '-rltgoDzvO --delete'
+          SOURCE: 'ui/dist/'
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_PATH }}
